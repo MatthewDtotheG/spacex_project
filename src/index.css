@@ -16,3 +16,7 @@ body {
 .mymissions {
   border-bottom: 5px solid black;
 }
+
+.launchSpecs {
+  display: inline-block;
+}

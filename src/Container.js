@@ -6,12 +6,8 @@ class Container extends Component {
   render() {
     return (
       <div>
-        <div className='mymissions'>
-          <h1>My Missions</h1>
-          {this.props.myMissions.map(launch => < Show launch={launch} missionClick={this.props.missionRemove}/>)}
-        </div>
         <div className='container'>
-          {this.props.launches.map(launch => < Show launch={launch} missionClick={this.props.missionClick}/>)}
+          {this.props.launches.map(launch => < Show launch={launch} clickedCheck={this.props.clickedCheck}/>)}
         </div>
       </div>
     );

@@ -6,17 +6,17 @@ class Filter extends Component {
   render() {
     return (
       <div>
-          <label>
-            Successful Missions:
-          </label>
-            <input
-              name="successfulOnly"
-              type="checkbox"
-              checked={this.props.successfulOnly}
-              onChange={this.props.handleCheck}
-            />
-              <br/>
-              <br/>
+        <label>
+          Successful Missions:
+        </label>
+          <input
+            name="successfulOnly"
+            type="checkbox"
+            checked={this.props.successfulOnly}
+            onChange={this.props.handleCheck}
+          />
+            <br/>
+            <br/>
       </div>
     );
   }
