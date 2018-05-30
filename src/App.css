@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  display: inline-block;
 }
 
 .App-logo {
@@ -25,4 +26,45 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+html body {
+  height: 100%;
+  margin: 0;
+  font-family: sans-serif;
+  background-color: black;
+  color: white;
+}
+
+label {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+h1 {
+  color: white;
+}
+
+div {
+  display: inline-block;
+}
+
+.filterStuff {
+  display: inline-block;
+  text-align: left;
+}
+
+.Search {
+  margin-top: 50px;
+  margin-right: 4%;
+}
+
+input {
+  border-radius: 5px;
+  height: 35px;
+}
+
+.BREAK {
+  height: 100px;
+  width: 100%;
 }

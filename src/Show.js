@@ -3,8 +3,6 @@ import './App.css';
 
 class Show extends Component {
 
-
-
   render() {
     let {flight_number, mission_name, links, launch_success, details, rocket} = this.props.launch
 

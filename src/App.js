@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import launch from './launch.jpg';
+import logo from './logo.png';
 import Container from './Container';
 import Filter from './Filter';
-import Search from './Search';
 import Missions from './Missions';
 import LaunchSpecs from './LaunchSpecs';
 import './App.css';
@@ -15,21 +15,53 @@ class App extends Component {
     myMissions: [],
     currentMission: [],
     query: '',
-    clicked: false
+    clicked: false,
+    rocketType: '',
+    filteredRockets: [],
+    filteredLaunches: [],
+    filteredCustomers: [],
+    allCustomers: [],
+    allRockets: []
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     fetch('https://api.spacexdata.com/v2/launches/')
     .then(x => x.json())
     .then((launchData) => {
       this.setState({
-            launches: launchData
+            launches: launchData,
+            filteredCustomers: launchData,
+            filteredRockets: launchData
         });
     })
   }
 
+  populateSelect = () => {
+    let rockets = this.state.launches.map((rocket) => rocket.rocket.rocket_name)
+    rockets.forEach((rocket) => {
+      if(!this.state.allRockets.includes(rocket)){
+        this.setState({
+          allRockets: [...this.state.allRockets, rocket]
+        })
+      }
+    })
+  }
+
+  // populateSelect = () => {
+  //   let rockets = this.state.launches.map((rocket) => ({text: rocket.rocket.rocket_name, value: rocket.rocket.rocket_name}))
+  //   rockets.forEach((rocket) => {
+  //     if(!this.state.allRockets.includes(rocket)){
+  //       rocket["key"] = this.state.allRockets.length
+  //       this.setState({
+  //         allRockets: [...this.state.allRockets, rocket]
+  //       })
+  //     }
+  //   })
+  // }
+
   filteredMissions = () => {
-    return this.state.launches.filter((launch) =>
+    return this.state.filteredCustomers.filter((l) => this.state.filteredRockets.includes(l)).filter((launch) =>
+    // this.state.filteredRockets.filter((launch) =>
         (!this.state.successfulOnly || this.state.successfulOnly && launch.launch_success))
         .filter((launch) => launch.mission_name.toLowerCase().includes(this.state.query.toLowerCase()))
   }
@@ -46,6 +78,66 @@ class App extends Component {
     })
   }
 
+  handleSelect = (e) => {
+    if(e.target.value === 'All Rockets') {
+      this.setState({
+        filteredRockets: this.state.filteredCustomers
+      })
+    } else {
+      const differentRockets = this.state.filteredCustomers.filter((rocket) => rocket.rocket.rocket_name === e.target.value)
+      this.setState({
+        filteredRockets: differentRockets
+      })
+    }
+  }
+
+
+  handleCustomer = (e) => {
+
+    if(e.target.value === 'All Customers') {
+      this.setState({
+        filteredCustomers: this.state.launches
+      })
+    } else {
+    let differentCustomers = []
+    this.state.launches.forEach((launch) => {
+      launch.rocket.second_stage.payloads.forEach((data) => {
+        if (data.customers.includes(e.target.value)) {
+          differentCustomers.push(launch)
+        }
+      })
+    })
+
+      this.setState({
+        filteredCustomers: differentCustomers
+      })
+    }
+  }
+
+  populateCustomers = () => {
+    let customer = this.state.launches.map(
+      (launch) => launch.rocket.second_stage.payloads.map((data) => data.customers))
+      function flatten(arr) {
+       return arr.reduce(function (flat, toFlatten) {
+         return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+       }, []);
+      }
+
+    let flatCustomer = flatten(customer)
+
+    flatCustomer.forEach((customer) => {
+      if(!this.state.allCustomers.includes(customer)){
+        this.setState({
+          allCustomers: [...this.state.allCustomers, customer]
+        })
+      }
+    })
+  }
+
+  customerFilter = () => {
+    return this.state.allCustomers.map((customer) => <option value={customer}>{customer}</option>)
+  }
+
   missionClick = (findFlightNum) => {
     const removeLaunch = this.state.launches.filter(launch => launch.flight_number !== findFlightNum)
     const addLaunch = this.state.launches.find(launch => launch.flight_number === findFlightNum)
@@ -56,7 +148,6 @@ class App extends Component {
   }
 
   missionRemove = (findFlightNum) => {
-    console.log('test')
     const removeLaunch = this.state.myMissions.filter(launch => launch.flight_number !== findFlightNum)
     const addLaunch = this.state.myMissions.find(launch => launch.flight_number === findFlightNum)
     this.setState({
@@ -69,7 +160,7 @@ class App extends Component {
     let checkMission = this.state.launches.find((mission) => mission.flight_number === id)
     this.setState({
       clicked: !this.state.clicked,
-      currentMission: [checkMission, ...this.state.currentMission]
+      currentMission: checkMission
     })
   }
 
@@ -80,21 +171,31 @@ class App extends Component {
   }
 
   render() {
+    // console.log(this.state.allCustomers)
     if(!this.state.clicked){
       return (
         <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="log2o" />
-            <h1 className="App-title">Welcome to React</h1>
+          <header>
           </header>
+          <img src={logo} className='LOGO'/>
+          <img src={launch} className='bg'/>
+
           < Filter
             successfulOnly={this.state.successfulOnly}
             handleCheck={this.handleCheck}
-          />
-          < Search
+            launches={this.state.launches}
+            handleSelect={this.handleSelect}
+            customerFilter={this.customerFilter}
+            populateCustomers={this.populateCustomers}
+            handleCustomer={this.handleCustomer}
             handleSearch={this.handleSearch}
             query={this.state.query}
+            allRockets={this.state.allRockets}
+            populateSelect={this.populateSelect}
           />
+
+          <div className='BREAK'></div>
+
           < Missions
             myMissions={this.state.myMissions}
             missionRemove={this.missionRemove}
@@ -111,17 +212,14 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <header className="App-header">
+          <header>
           </header>
-          < Missions
-            myMissions={this.state.myMissions}
-            missionRemove={this.missionRemove}
-          />
 
-          < LaunchSpecs launch={this.state.currentMission[0]}
-                        missionClick={this.missionClick}
-                        goBack={this.goBack}
-                        />
+          < LaunchSpecs
+              launch={this.state.currentMission}
+              missionClick={this.missionClick}
+              goBack={this.goBack}
+          />
       </div>
       )
     }

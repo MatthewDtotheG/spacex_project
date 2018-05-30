@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Show from './Show';
-import Search from './Search';
 class Container extends Component {
 
   render() {
