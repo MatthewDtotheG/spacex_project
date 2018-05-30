@@ -47,8 +47,12 @@ class App extends Component {
     })
   }
 
+// componentDidUpdate() {
+//   this.filteredMissions()
+// }
 
   filteredMissions = () => {
+    console.log("filtering")
     return this.state.filteredCustomers.filter((l) => this.state.filteredRockets.includes(l)).filter((launch) =>
     // this.state.filteredRockets.filter((launch) =>
         (!this.state.successfulOnly || this.state.successfulOnly && launch.launch_success))
@@ -70,10 +74,10 @@ class App extends Component {
   handleSelect = (e) => {
     if(e.target.value === 'All Rockets') {
       this.setState({
-        filteredRockets: this.state.filteredCustomers
+        filteredRockets: this.state.launches
       })
     } else {
-      const differentRockets = this.state.filteredCustomers.filter((rocket) => rocket.rocket.rocket_name === e.target.value)
+      const differentRockets = this.state.launches.filter((rocket) => rocket.rocket.rocket_name === e.target.value)
       this.setState({
         filteredRockets: differentRockets
       })
@@ -81,8 +85,10 @@ class App extends Component {
   }
 
 
+
   handleCustomer = (e) => {
     if(e.target.value === 'All Customers') {
+      console.log("WOOOOO BITCHES")
       this.setState({
         filteredCustomers: this.state.launches
       })
