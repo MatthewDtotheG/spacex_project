@@ -47,17 +47,6 @@ class App extends Component {
     })
   }
 
-  // populateSelect = () => {
-  //   let rockets = this.state.launches.map((rocket) => ({text: rocket.rocket.rocket_name, value: rocket.rocket.rocket_name}))
-  //   rockets.forEach((rocket) => {
-  //     if(!this.state.allRockets.includes(rocket)){
-  //       rocket["key"] = this.state.allRockets.length
-  //       this.setState({
-  //         allRockets: [...this.state.allRockets, rocket]
-  //       })
-  //     }
-  //   })
-  // }
 
   filteredMissions = () => {
     return this.state.filteredCustomers.filter((l) => this.state.filteredRockets.includes(l)).filter((launch) =>
@@ -93,7 +82,6 @@ class App extends Component {
 
 
   handleCustomer = (e) => {
-
     if(e.target.value === 'All Customers') {
       this.setState({
         filteredCustomers: this.state.launches
@@ -212,15 +200,12 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <header>
-          </header>
-
           < LaunchSpecs
               launch={this.state.currentMission}
               missionClick={this.missionClick}
               goBack={this.goBack}
           />
-      </div>
+        </div>
       )
     }
 

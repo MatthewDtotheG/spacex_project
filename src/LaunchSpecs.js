@@ -17,8 +17,8 @@ class LaunchSpecs extends Component {
               <p>Launch site: {launch_site.site_name_long}</p>
               <p>Mission Details: {details}</p>
               <br/>
-              <button onClick={() => this.props.missionClick(flight_number)}>Add Mission</button>
-              <button onClick={() => this.props.goBack()}>Go Back</button>
+              <button className="ui button" onClick={() => this.props.missionClick(flight_number)}>Add Mission</button>
+              <button className="ui button" onClick={() => this.props.goBack()}>Go Back</button>
             </div>
         </div>
     );

@@ -14,8 +14,14 @@
 
 .launchSpecs {
   display: inline-block;
+  margin-top: 10%;
+  height: 100%;
 }
 
+.launchSpecs h1 {
+  font-size: 50px;
+  margin-bottom: 30px;
+}
 
 .bg {
     /* Full height */
@@ -36,37 +42,26 @@
   z-index: 9000;
 }
 
-.launchSpecs {
-
-}
-
 .missionImg {
     display: inline-block;
+    margin: auto;
 }
 
 .missionInfo {
     display: inline-block;
-    float: right;
-    width: 40%;
     text-align: left;
+    margin-left: 50px;
+    width: 400px;
 }
 
+.inline {
+  display: inline-block;
+  margin-left: 20px;
+}
 
-#Container1 video {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  // -webkit-filter: grayscale(100%);
-   }
-
-#Container1 div {
-  position: relative;
-  z-index: 1;
+.checkBOX {
+  margin-top: 20px;
+  background-color: gray;
+  border-radius: 10px;
+  top: 5px;
 }

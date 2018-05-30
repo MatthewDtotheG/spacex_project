@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  display: inline-block;
+  width: 100%;
 }
 
 .App-logo {
@@ -37,7 +37,7 @@ html body {
 }
 
 label {
-  font-size: 25px;
+  font-size: 18px;
   margin-right: 10px;
 }
 
@@ -45,18 +45,14 @@ h1 {
   color: white;
 }
 
-div {
-  display: inline-block;
-}
-
 .filterStuff {
+  margin-top: 70px;
   display: inline-block;
   text-align: left;
 }
 
 .Search {
-  margin-top: 50px;
-  margin-right: 4%;
+  display: inline-block;
 }
 
 input {
@@ -67,4 +63,9 @@ input {
 .BREAK {
   height: 100px;
   width: 100%;
+}
+
+p {
+  font-size: 18px;
+  font-weight: bold;
 }
